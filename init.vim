@@ -18,6 +18,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'blueyed/vim-diminactive'
+Plug 'davidgranstrom/nvim-markdown-preview'
+Plug 'lyokha/vim-xkbswitch'
 call plug#end()
 
 
@@ -28,6 +31,7 @@ set hidden
 set pumheight=10
 set ruler
 set number
+" set keymap=russian-jcukenwin
 " set mouse=a
 set splitbelow splitright
 set tabstop=4 softtabstop=4
@@ -41,8 +45,11 @@ set cursorline
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 runtime macros/matchit.vim
 
-inoremap jk <Esc>
-inoremap kj <Esc>
+" Avoid the Esc key
+" inoremap jk <Esc> " bad for ru
+" inoremap kj <Esc>
+inoremap jw <Esc>
+inoremap wj <Esc>
 
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -54,13 +61,19 @@ noremap <silent> <C-Right> :vertical resize -3<CR>
 noremap <silent> <C-Up> :resize +3<CR>
 noremap <silent> <C-Down> :resize -3<CR>
 
+inoremap II <Esc>I
+inoremap AA <Esc>A
+
 vnoremap < <gv
 vnoremap > >gv
 
 nnoremap <leader>cd :lcd %:h<CR>
 
-inoremap <c-u> <ESC>viwUi
-nnoremap <c-u> viwU<Esc>
+" stop continuation of comments
+set formatoptions-=cro
+
+set ignorecase
+set smartcase
 
 " Color scheme
 set termguicolors
@@ -71,7 +84,14 @@ set background=dark
 autocmd ColorScheme janah highlight Normal ctermbg=235
 colorscheme janah
 
-"vim-easyescape
+
+" vim-xkbswitch
+let g:XkbSwitchEnabled = 1
+let g:XkbSwitchLib = '/usr/local/lib/libg3kbswitch.so' " g3kb-switch should be installed
+let g:XkbSwitchIMappings = ['ru']
+
+
+" vim-easyescape
 let g:easyescape_chars = { "j": 1, "k": 1 }
 let g:easyescape_timeout = 60
 cnoremap jk <ESC>
@@ -97,7 +117,7 @@ let g:show_spaces_that_precede_tabs=1
 
 " startify
 let g:startify_bookmarks = [
-  \ { 'z': '~/.shrc' },
+  \ { 'z': '~/.bashrc' },
   \ { 'v': '~/.config/nvim/init.vim' },
   \ ]
 let g:startify_lists = [
@@ -113,12 +133,4 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-
-lua << EOF
-require('telescope').setup{
-  defaults = {
-    prompt_prefix = "$ ",
-  }
-}
-require('telescope').load_extension('fzf')
-EOF
+lua require('myconfig')
