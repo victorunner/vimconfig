@@ -3,7 +3,7 @@ set nocompatible
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
-Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf'
 Plug 'nvie/vim-flake8'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'overcache/NeoSolarized'
@@ -133,4 +133,4 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-lua require('myconfig')
+" lua require('myconfig') TODO error
